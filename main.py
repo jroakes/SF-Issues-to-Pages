@@ -68,21 +68,25 @@ def run_reports(url, data=None):
     authoring_df = parse_url_images(authoring_df, images_authoring)
     authoring_df = parse_url_links(authoring_df, links_authoring)
 
-
     # Build Sitewide Data
     issues_report_sitewide = map_url_counts_to_issues_sitewide(url_df, issues_report_sitewide, issues)
     link_issues_sitewide = read_sitewide_link_data(url_df, filename=f"{data['data_path']}/{data['links_file']}", percent_threshold=data['percent_threshold'])
     image_issues_sitewide = read_sitewide_image_data(url_df, filename=f"{data['data_path']}/{data['images_file']}", percent_threshold=data['percent_threshold']) 
-
 
     # Load all issues to Google Sheets
     issue_sheet_mapping = load_all_issues_to_sheets(issues, url, version=data['run_version'])
 
     # Add sheets URLS to issues_report_sitewide
     issues_report_sitewide['Examples'] = issues_report_sitewide['Issue Data Name'].map(lambda x: f'=HYPERLINK("{issue_sheet_mapping[x]}", "Examples")')
+    all_issues_report['Examples'] = all_issues_report['Issue Data Name'].map(lambda x: f'=HYPERLINK("{issue_sheet_mapping[x]}", "Examples")')
+    issues_report_authoring['Examples'] = issues_report_authoring['Issue Data Name'].map(lambda x: f'=HYPERLINK("{issue_sheet_mapping[x]}", "Examples")')
+
+    # Remove Issue Data Name column
+    issues_report_authoring.drop(columns=['Issue Data Name'], inplace=True)                                                                      
+    all_issues_report.drop(columns=['Issue Data Name'], inplace=True)
     issues_report_sitewide.drop(columns=['Issue Data Name'], inplace=True)
 
-
+    # Load output data to Google Sheets
     output_data = {
         'All Issues': all_issues_report,
         'Authoring Issues': issues_report_authoring,
