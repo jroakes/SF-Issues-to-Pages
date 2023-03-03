@@ -1,4 +1,8 @@
+import os
+import shutil
+
 from lib.process import *
+
 from lib.crawl import crawler
 from lib.sheets import load_all_issues_to_sheets, load_ouput_data_to_sheet
 
@@ -102,6 +106,22 @@ def run_reports(url, data=None):
 
 
 def run_audit(url, data=None):
+
+
+    # Getting the list of directories
+    dir = os.listdir("data")
+    
+    # Checking if the list is empty or not
+    if not len(dir) == 0:
+        print("Data directory is not empty. Please delete the contents of the data directory before running the audit.")
+        res = input("Would you like to delete the contents of the data directory? (y/n): ")
+        if res == "y":
+            print("Deleting contents of data directory...")
+            shutil.rmtree("data")
+            os.makedirs("data")
+        else:
+            print("Please delete the contents of the data directory before running the audit.")
+            return False
 
     if not run_crawl(url, data):
         return False
