@@ -1,0 +1,2 @@
+# Screaming Frog Issues Tool
+

@@ -152,5 +152,12 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-#Excel Files
+#Data Files
 *.xlsx
+*.csv
+*.seospider
+
+# Credentials
+config/*.json
+config/*.seospiderconfig
+
