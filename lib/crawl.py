@@ -37,7 +37,7 @@ def crawler(url, output_folder = None):
 
     sf_executable = f"{sf_path}\ScreamingFrogSEOSpiderCli"
 
-    command = f""""{sf_executable}" --crawl {url} -headless --save-crawl --output-folder "{output_folder}" --config "{SF_CONFIG_PATH}" --export-tabs "Internal:HTML" --bulk-export "Issues:All,Links:All Inlinks,Images:All Image Inlinks" --export-format csv"""
+    command = f""""{sf_executable}" --crawl {url} -headless --save-crawl --output-folder "{output_folder}" --config "{SF_CONFIG_PATH}" --use-pagespeed --export-tabs "Internal:HTML" --bulk-export "Issues:All,Links:All Inlinks,Images:All Image Inlinks" --export-format csv"""
 
     #Execute Screaming Frog Crawl
     stream = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
